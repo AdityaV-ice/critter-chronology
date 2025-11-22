@@ -3,10 +3,11 @@ package com.udacity.jdnd.course3.critter.user;
 import com.udacity.jdnd.course3.critter.pet.Pet;
 import com.udacity.jdnd.course3.critter.pet.PetRepository;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+@Transactional
 @Service
 public class CustomerService {
 
@@ -27,10 +28,12 @@ public class CustomerService {
         return customerRepository.save(customer);
     }
 
+    @Transactional(readOnly = true)
     public List<Customer> getAllCustomers() {
         return customerRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public Customer getCustomer(long customerId) {
         return customerRepository.findById(customerId).orElse(null);
     }
@@ -40,6 +43,7 @@ public class CustomerService {
     // -------------------------
 
     /** Get owner for a given pet id */
+    @Transactional(readOnly = true)
     public Customer getOwnerByPet(long petId) {
         return petRepository.findById(petId)
                 .map(Pet::getOwner)

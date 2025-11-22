@@ -3,9 +3,12 @@ package com.udacity.jdnd.course3.critter.pet;
 import com.udacity.jdnd.course3.critter.user.Customer;
 import com.udacity.jdnd.course3.critter.user.CustomerRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.List;
 
+@Transactional
 @Service
 public class PetService {
 
@@ -39,14 +42,17 @@ public class PetService {
         return saved;
     }
 
+    @Transactional(readOnly = true)
     public Pet getPet(long petId) {
         return petRepository.findById(petId).orElse(null);
     }
 
+    @Transactional(readOnly = true)
     public List<Pet> getPets() {
         return petRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public List<Pet> getPetsByOwner(long ownerId) {
         return petRepository.findByOwnerId(ownerId);
     }

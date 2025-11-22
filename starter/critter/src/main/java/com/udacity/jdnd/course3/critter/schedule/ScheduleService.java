@@ -5,10 +5,12 @@ import com.udacity.jdnd.course3.critter.pet.PetRepository;
 import com.udacity.jdnd.course3.critter.user.Employee;
 import com.udacity.jdnd.course3.critter.user.EmployeeRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
@@ -36,18 +38,22 @@ public class ScheduleService {
         return scheduleRepository.save(schedule);
     }
 
+    @Transactional(readOnly = true)
     public List<Schedule> getAllSchedules() {
         return scheduleRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public List<Schedule> getScheduleForPet(long petId) {
         return scheduleRepository.findAllByPetsId(petId);
     }
 
+    @Transactional(readOnly = true)
     public List<Schedule> getScheduleForEmployee(long employeeId) {
         return scheduleRepository.findAllByEmployeesId(employeeId);
     }
 
+    @Transactional(readOnly = true)
     public List<Schedule> getScheduleForCustomer(long customerId) {
         return scheduleRepository.findAllByPetsOwnerId(customerId);
     }
